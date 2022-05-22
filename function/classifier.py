@@ -14,6 +14,8 @@ __FUNCTION_KEYDICT__ = {
     "'\\x19'": '+Y ', "'\\x1a'": '+Z '
 }
 
+__LOWER_KEYDICT__ = {}
+
 def returns(keys):
     keys = str(keys)
     if __FUNCTION_KEYDICT__.get(keys):
