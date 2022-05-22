@@ -3,7 +3,5 @@ from module import window, keyboard
 
 if __name__ == "__main__":
     with Listener(on_press=keyboard.func) as listener:
-        window.installation()
-        window.design()
-        window.root.mainloop()
+        window.win.mainloop()
         listener.join()

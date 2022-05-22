@@ -4,14 +4,13 @@ import tkinter.scrolledtext as tkst
 import ctypes
 import math
 
-root = tk.Tk()
 
 def installation():
     User32 = ctypes.windll.user32
     User_Screen_Middle_width = math.trunc((User32.GetSystemMetrics(0) / 2))
     User_Screen_Middle_height = math.trunc((User32.GetSystemMetrics(1) / 2))
-    Program_ScreenSize_width = 10
-    Program_ScreenSize_height = 80
+    Program_ScreenSize_width = 400
+    Program_ScreenSize_height = 400
     MPSW = math.trunc(Program_ScreenSize_width / 2)
     MPSH = math.trunc(Program_ScreenSize_height / 2)
     Screen_Size = "{0}x{1}+{2}+{3}".format(
@@ -20,17 +19,30 @@ def installation():
         User_Screen_Middle_width-MPSW,
         User_Screen_Middle_height-MPSH
     )
-    root.geometry(Screen_Size)
-    root.resizable(False, False)
-    root.wm_attributes("-topmost", 1)
-    root.overrideredirect(True)
-    root.lift()
+    return Screen_Size
+
+class Win(tk.Tk):
+
+    def __init__(self,master=None):
+        tk.Tk.__init__(self,master)
+        self.geometry(installation())
+        self.resizable(False, False)
+        self.wm_attributes("-topmost", 1)
+        self.overrideredirect(True)
+        self.lift()
+        self._offsetx = 0
+        self._offsety = 0
+        self.bind('<Button-1>',self.clickwin)
+        self.bind('<B1-Motion>',self.dragwin)
+
+    def dragwin(self,event):
+        x = self.winfo_pointerx() - self._offsetx
+        y = self.winfo_pointery() - self._offsety
+        self.geometry('+{x}+{y}'.format(x=x,y=y))
+
+    def clickwin(self,event):
+        self._offsetx = event.x
+        self._offsety = event.y
 
 
-def design():
-    Frame1 = ttk.Frame(root)
-    Frame1.place(relx=0.01, rely=0.013, relheight=0.975,relwidth=0.375)
-    Frame1.configure(relief='groove')
-    Frame1.configure(relief='groove')
-    Frame1.configure(borderwidth="2")
-    Frame1.configure(cursor="fleur")
+win = Win()
