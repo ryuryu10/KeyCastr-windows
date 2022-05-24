@@ -81,14 +81,11 @@ top.pack(side=TOP, pady=2)
 # Creating the squircle
 rect = round_rectangle(0, 0, 500, 500, radius=50, fill="#1fa5fe")
 
-top.bind("<B1-Motion>", move)
+
 root.bind("<Button-3>", cl)
 
 rx = root.winfo_rootx()
 ry = root.winfo_rooty()
-side = Label(canvas, text='  \n', background="blue")
-side.place(x=500-10, y=500-10)
-side.bind("<B1-Motion>", resize)
 root.unbind("<B1-Motion>")
 
 root.mainloop()
